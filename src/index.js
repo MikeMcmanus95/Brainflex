@@ -5,13 +5,17 @@ import * as serviceWorker from './serviceWorker';
 import Routes from './routes';
 import history from './history';
 import Navbar from './components/Navbar';
+import store from './store';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router history={history}>
-      <Navbar />
-      <Routes />
-    </Router>
+    <Provider store={store}>
+      <Router history={history}>
+        <Navbar />
+        <Routes />
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,13 +1,15 @@
 import React from 'react';
 import useInput from '../hooks/useInput';
+import { connect } from 'react-redux';
+import { auth } from '../store/user';
 
-const Login = () => {
+const Login = ({ login, errorMsg }) => {
   const { value: email, bind: bindEmail, reset: resetEmail } = useInput('');
   const { value: pass, bind: bindPass, reset: resetPass } = useInput('');
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(email, pass);
+    login('login', email, pass);
     resetEmail();
     resetPass();
   };
@@ -31,4 +33,12 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  errorMsg: state.user.errorMsg,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (method, email, password) => dispatch(auth(method, email, password)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

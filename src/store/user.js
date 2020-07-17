@@ -26,10 +26,12 @@ const userError = (message) => ({ type: USER_ERROR, message });
  */
 export const me = () => async (dispatch) => {
   try {
-    const res = await axios.get(URL + '/auth/me');
+    const res = await axios.get(URL + '/auth/me', {
+      withCredentials: true,
+    });
     dispatch(getUser(res.data || defaultUser));
   } catch (error) {
-    dispatch(userError(error.response.data));
+    dispatch(userError(error));
     console.error(error);
   }
 };
@@ -37,11 +39,15 @@ export const me = () => async (dispatch) => {
 export const auth = (method, email, password, name) => async (dispatch) => {
   let res;
   try {
-    res = await axios.post(`${URL}/auth/${method}`, { email, name, password });
+    res = await axios.post(
+      `${URL}/auth/${method}`,
+      { email, name, password },
+      { withCredentials: true }
+    );
     dispatch(getUser(res.data));
     history.push('/');
   } catch (error) {
-    dispatch(userError(error.response.data));
+    dispatch(userError(error));
     console.error(error);
   }
 };

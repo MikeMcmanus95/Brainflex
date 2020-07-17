@@ -9,14 +9,14 @@ import store from './store';
 import { Provider } from 'react-redux';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <React.StrictMode>
       <Router history={history}>
         <Navbar />
         <Routes />
       </Router>
-    </Provider>
-  </React.StrictMode>,
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 
